@@ -10,6 +10,7 @@ class AmazonWebServicesTest(TestCase):
     azs = amazon_web_services.AmazonWebServicesProvider._availability_zones
     volume_types = amazon_web_services.AmazonWebServicesProvider._volume_types
     instance_type_series = amazon_web_services.AmazonWebServicesProvider._instance_type_series
+    instance_types = amazon_web_services.AmazonWebServicesProvider._instance_types
 
     def setUp(self):
         self.factory = Faker()
@@ -112,6 +113,17 @@ class AmazonWebServicesTest(TestCase):
         for i in range(1000):
             name = self.factory.instance_type_serie_verbose_name()
             self.assertIn(name, names)
+
+    def test_instance_type(self):
+        for i in range(1000):
+            it = self.factory.instance_type()
+            self.assertIn(it, self.instance_types)
+
+        for i in range(1000):
+            serie = self.factory.instance_type_serie_name()
+            it = self.factory.instance_type(serie=serie)
+            self.assertIn(it, self.instance_types)
+            self.assertTrue(it.startswith(serie))
 
     def test_snapshot_id(self):
         reg_snap_id = re.compile('^snap-[0-9a-f]{8}$')
