@@ -125,6 +125,11 @@ class AmazonWebServicesTest(TestCase):
             self.assertIn(it, self.instance_types)
             self.assertTrue(it.startswith(serie))
 
+    def test_flavor_name(self):
+        for i in range(1000):
+            it = self.factory.flavor_name()
+            self.assertIn(it, self.instance_types)
+
     def test_snapshot_id(self):
         reg_snap_id = re.compile('^snap-[0-9a-f]{8}$')
         for i in range(1000):

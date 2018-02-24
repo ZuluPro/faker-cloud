@@ -335,6 +335,9 @@ class Provider(cloud.Provider, file.Provider):
                if i.startswith(serie)]
         return self.random_element(its)
 
+    def flavor_name(self):
+        return self.instance_type()
+
     def snapshot_id(self):
         """
         Returns an snapshot ID.
