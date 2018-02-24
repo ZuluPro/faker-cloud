@@ -59,6 +59,30 @@ class AmazonWebServicesTest(TestCase):
             ami_id = self.factory.ami_id()
             self.assertTrue(reg_ami_id.match(ami_id))
 
+    def test_security_group_id(self):
+        reg_sg_id = re.compile('^sg-[0-9a-f]{8}$')
+        for i in range(1000):
+            sg_id = self.factory.security_group_id()
+            self.assertTrue(reg_sg_id.match(sg_id))
+
+    def test_vpc_id(self):
+        reg_vpc_id = re.compile('^vpc-[0-9a-f]{8}$')
+        for i in range(1000):
+            vpc_id = self.factory.vpc_id()
+            self.assertTrue(reg_vpc_id.match(vpc_id))
+
+    def test_volume_id(self):
+        reg_vol_id = re.compile('^vol-[0-9a-f]{17}$')
+        for i in range(1000):
+            vol_id = self.factory.volume_id()
+            self.assertTrue(reg_vol_id.match(vol_id))
+
+    def test_snapshot_id(self):
+        reg_snap_id = re.compile('^snap-[0-9a-f]{8}$')
+        for i in range(1000):
+            snap_id = self.factory.snapshot_id()
+            self.assertTrue(reg_snap_id.match(snap_id))
+
     def test_ipv4_public(self):
         for i in range(1000):
             ip = self.factory.ipv4_public()

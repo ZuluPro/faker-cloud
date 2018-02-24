@@ -46,7 +46,11 @@ class AmazonWebServicesProvider(BaseProvider):
     ]
     _instance_id_format = 'i-?????????????????'
     _kernel_id_format = 'aki-????????'
-    _image_id_format = 'ami-????????'
+    _ami_id_format = 'ami-????????'
+    _sg_id_format = 'sg-????????'
+    _volume_id_format = 'vol-?????????????????'
+    _vpc_id_format = 'vpc-????????'
+    _snapshot_id_format = 'snap-????????'
     _ipv4_public_net = ipaddress.IPv4Network('54.160.0.0/12')
     _ec2_public_dns_format = 'ec2-{ip}.compute-1.amazonaws.com'
 
@@ -141,7 +145,55 @@ class AmazonWebServicesProvider(BaseProvider):
         :returns: AMI ID
         :rtype: str
         """
-        return self.hexify(self._image_id_format)
+        return self.hexify(self._ami_id_format)
+
+    def security_group_id(self):
+        """
+        Returns an security group ID.
+
+        >>> fake.security_group_id()
+        'sg-919dcbf8'
+
+        :returns: Security group ID
+        :rtype: str
+        """
+        return self.hexify(self._sg_id_format)
+
+    def vpc_id(self):
+        """
+        Returns an VPC ID.
+
+        >>> fake.vpc_id()
+        'vpc-119dcbf8'
+
+        :returns: VPC ID
+        :rtype: str
+        """
+        return self.hexify(self._vpc_id_format)
+
+    def volume_id(self):
+        """
+        Returns an volume ID.
+
+        >>> fake.volume_id()
+        'vol-04ceccde3881f8f6e'
+
+        :returns: Volume ID
+        :rtype: str
+        """
+        return self.hexify(self._volume_id_format)
+
+    def snapshot_id(self):
+        """
+        Returns an snapshot ID.
+
+        >>> fake.snapshot_id()
+        'vol-04ceccde3881f8f6e'
+
+        :returns: Snapshot ID
+        :rtype: str
+        """
+        return self.hexify(self._snapshot_id_format)
 
     def ipv4_public(self):
         """
