@@ -52,6 +52,33 @@ class AmazonWebServicesProvider(file.Provider):
         ('Throughput Optimized HDD', 'st1'),
         ('Provisioned IOPS SSD', 'io1'),
     )
+    _instance_type_series = (
+        ('t1', 'Burstable Performance 1'),
+        ('t2', 'Burstable Performance 2'),
+        ('m1', 'General Purpose 1'),
+        ('m2', 'General Purpose 2'),
+        ('m3', 'General Purpose 3'),
+        ('m4', 'General Purpose 4'),
+        ('m5', 'General Purpose 5'),
+        ('p2', 'Accelerated computing'),
+        ('c1', 'Compute Optimized 1'),
+        ('c3', 'Compute Optimized 3'),
+        ('c4', 'Compute Optimized 4'),
+        ('c5', 'Compute Optimized 5'),
+        ('r3', 'Memory optimized R3'),
+        ('r4', 'Memory optimized R4'),
+        ('i2', 'Storage optimized I2'),
+        ('i3', 'Storage optimized I3'),
+        ('d2', 'Storage optimized D2'),
+        ('g2', 'GPU optimized 2'),
+        ('g3', 'GPU optimized 3'),
+        ('cc2', 'Accelerated computing CC2'),
+        ('cr1', 'Memory optimized CR1'),
+        ('x1', 'Memory optimized X1'),
+        ('x1e', 'Memory optimized X1E'),
+        ('hs1', 'Storage optimized HS1'),
+        ('h1', 'Storage optimized H1'),
+    )
     _instance_id_format = 'i-?????????????????'
     _kernel_id_format = 'aki-????????'
     _ami_id_format = 'ami-????????'
@@ -227,6 +254,42 @@ class AmazonWebServicesProvider(file.Provider):
         :rtype: str
         """
         return self.random_element(self._volume_types)[1]
+
+    def instance_type_serie(self):
+        """
+        Returns an volume type.
+
+        >>> fake.instance_type_serie()
+        ('m5', 'General Purpose 5')
+
+        :returns: Tuple with (name, verbose_name)
+        :rtype: tuple
+        """
+        return self.random_element(self._instance_type_series)
+
+    def instance_type_serie_name(self):
+        """
+        Returns an instance type serie name.
+
+        >>> fake.instance_type_serie_name()
+        'm5'
+
+        :returns: Instance type serie name
+        :rtype: str
+        """
+        return self.random_element(self._instance_type_series)[0]
+
+    def instance_type_serie_verbose_name(self):
+        """
+        Returns an instance type serie verbose name.
+
+        >>> fake.instance_type_serie_verbose_name()
+        'General Purpose 5'
+
+        :returns: Instance type serie verbose name
+        :rtype: str
+        """
+        return self.random_element(self._instance_type_series)[1]
 
     def snapshot_id(self):
         """
