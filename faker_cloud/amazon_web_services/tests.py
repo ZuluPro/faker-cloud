@@ -53,11 +53,11 @@ class AmazonWebServicesTest(TestCase):
             kernel_id = self.factory.kernel_id()
             self.assertTrue(reg_kernel_id.match(kernel_id))
 
-    def test_image_id(self):
-        reg_image_id = re.compile('^ami-[0-9a-f]{8}$')
+    def test_ami_id(self):
+        reg_ami_id = re.compile('^ami-[0-9a-f]{8}$')
         for i in range(1000):
-            image_id = self.factory.image_id()
-            self.assertTrue(reg_image_id.match(image_id))
+            ami_id = self.factory.ami_id()
+            self.assertTrue(reg_ami_id.match(ami_id))
 
     def test_ipv4_public(self):
         for i in range(1000):

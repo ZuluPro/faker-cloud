@@ -108,21 +108,66 @@ class AmazonWebServicesProvider(BaseProvider):
         return self.lexify(text, letters)
 
     def instance_id(self):
+        """
+        Returns an instance ID.
+
+        >>> fake.instance_id()
+        'i-055a44951998d0d12'
+
+        :returns: Instance ID
+        :rtype: str
+        """
         return self.hexify(self._instance_id_format)
 
     def kernel_id(self):
+        """
+        Returns an kernel ID.
+
+        >>> fake.kernel_id()
+        'aki-919dcaf8'
+
+        :returns: Kernel ID
+        :rtype: str
+        """
         return self.hexify(self._kernel_id_format)
 
-    def image_id(self):
+    def ami_id(self):
+        """
+        Returns an AMI ID.
+
+        >>> fake.ami_id()
+        'ami-919dcbf8'
+
+        :returns: AMI ID
+        :rtype: str
+        """
         return self.hexify(self._image_id_format)
 
     def ipv4_public(self):
+        """
+        Returns an AWS public IPv4.
+
+        >>> fake.ipv4_public()
+        IPv4Address('52.162.42.6')
+
+        :returns: Public AWS IPv4
+        :rtype: ipaddress.IPv4Address
+        """
         min_ip = self._ipv4_public_net[1]._ip
         max_ip = self._ipv4_public_net[-2]._ip
         ip = ipaddress.IPv4Address(self.random_int(min_ip, max_ip))
         return ip
 
     def ec2_public_dns(self, ip=None):
+        """
+        Returns an EC2 domain name bound to an IPv4.
+
+        >>> fake.ec2_public_dns()
+        'ec2-52-162-42-6.compute-1.amazonaws.com'
+
+        :returns: Public DNS
+        :rtype: str
+        """
         ip = str(ip or self.ipv4_public()).replace('.', '-')
         dns = self._ec2_public_dns_format.format(ip=ip)
         return dns
