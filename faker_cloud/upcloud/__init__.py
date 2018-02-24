@@ -11,6 +11,7 @@ class Provider(cloud.Provider):
         ('uk-lon1', 'London #1'),
         ('us-chi1', 'Chicago #1'),
     )
+    _datacenters = _zones
     _volume_types = (
         ('MaxIOPS', 'maxiops'),
         ('HDD', 'hdd'),

@@ -27,3 +27,9 @@ class UpcloudTest(TestCase):
         for i in range(1000):
             zone = self.factory.zone_code()
             self.assertIsInstance(zone, str)
+
+    def test_datacenter(self):
+        for i in range(1000):
+            dc = self.factory.datacenter()
+            self.assertIsInstance(dc, tuple)
+            self.assertIn(dc, self.zones)

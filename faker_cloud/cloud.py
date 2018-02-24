@@ -3,6 +3,11 @@ from faker.providers import BaseProvider
 
 
 class Provider(BaseProvider):
+    _datacenters = (
+        ('cam', 'Cameroun'),
+        ('pt', 'Portugal'),
+        ('es', 'Spain'),
+    )
     _volume_types = (
         ('HDD', 'hdd'),
         ('SSD', 'ssd'),
@@ -10,6 +15,42 @@ class Provider(BaseProvider):
 
     def hexify(self, text='???'):
         return self.lexify(text, string.hexdigits[:-6])
+
+    def datacenter(self):
+        """
+        Returns a datacenter.
+
+        >>> fake.datacenter()
+        ('London #1', 'uk-lon1')
+
+        :returns: Tuple with (verbose_name, code)
+        :rtype: tuple
+        """
+        return self.random_element(self._datacenters)
+
+    def datacenter_code(self):
+        """
+        Returns a datacenter code.
+
+        >>> fake.datacenter_code()
+        'uk-lon1'
+
+        :returns: Datacenter code
+        :rtype: str
+        """
+        return self.datacenter()[0]
+
+    def datacenter_name(self):
+        """
+        Returns a datacenter naùe.
+
+        >>> fake.datacenter_name()
+        'London #1'
+
+        :returns: Datacenter name
+        :rtype: str
+        """
+        return self.datacenter()[1]
 
     def flavor_name(self):
         """

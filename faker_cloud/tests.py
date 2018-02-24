@@ -8,11 +8,29 @@ REG_FLAVOR_NAME = re.compile(r'\d{1,3}CPU-\d{1,4}GB')
 
 
 class CloudTest(TestCase):
+    datacenters = cloud.Provider._datacenters
     volume_types = cloud.Provider._volume_types
 
     def setUp(self):
         self.factory = Faker()
         self.factory.add_provider(cloud.Provider)
+
+    def test_datacenter(self):
+        for i in range(1000):
+            dc = self.factory.datacenter()
+            self.assertIn(dc, self.datacenters)
+
+    def test_datacenter_name(self):
+        names = [j for i, j in self.datacenters]
+        for i in range(1000):
+            dc = self.factory.datacenter_name()
+            self.assertIn(dc, names)
+
+    def test_datacenter_code(self):
+        codes = [i for i, j in self.datacenters]
+        for i in range(1000):
+            dc = self.factory.datacenter_code()
+            self.assertIn(dc, codes)
 
     def test_flavor_name(self):
         for i in range(1000):
