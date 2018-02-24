@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 import ipaddress
-from faker.providers import BaseProvider
 from faker.providers import file
+from faker_cloud import cloud
 
-HEX_LETTERS = '0123456789abcdef'
 
-
-class AmazonWebServicesProvider(file.Provider):
+class Provider(cloud.Provider, file.Provider):
     _regions = [
         ('us-east-1', 'US East (N. Virginia)'),
         ('us-east-2', 'US East (Ohio)'),
@@ -172,9 +170,6 @@ class AmazonWebServicesProvider(file.Provider):
         azs = self._availability_zones[:]
         azs = [a for a in azs if a.startswith(region)]
         return self.random_element(azs)
-
-    def hexify(self, text='???', letters=HEX_LETTERS):
-        return self.lexify(text, letters)
 
     def instance_id(self):
         """

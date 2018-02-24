@@ -5,4 +5,7 @@ __author__ = 'Anthony Monthe (ZuuPro)'
 __email__ = 'anthony.monthe@gmail.com'
 __url__ = 'https://github.com/ZuluPro/faker_cloud/'
 __license__ = 'BSD'
-__keywords__ = ['cloud', 'test', 'faker']
+__keywords__ = ['cloud', 'test', 'faker', 'amazon web services', 'ec2', 's3']
+
+from .cloud import Provider
+from .amazon_web_services import Provider as AmazonWebServicesProvider

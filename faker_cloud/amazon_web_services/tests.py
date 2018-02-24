@@ -6,15 +6,15 @@ from faker_cloud import amazon_web_services
 
 
 class AmazonWebServicesTest(TestCase):
-    regions = amazon_web_services.AmazonWebServicesProvider._regions
-    azs = amazon_web_services.AmazonWebServicesProvider._availability_zones
-    volume_types = amazon_web_services.AmazonWebServicesProvider._volume_types
-    instance_type_series = amazon_web_services.AmazonWebServicesProvider._instance_type_series
-    instance_types = amazon_web_services.AmazonWebServicesProvider._instance_types
+    regions = amazon_web_services.Provider._regions
+    azs = amazon_web_services.Provider._availability_zones
+    volume_types = amazon_web_services.Provider._volume_types
+    instance_type_series = amazon_web_services.Provider._instance_type_series
+    instance_types = amazon_web_services.Provider._instance_types
 
     def setUp(self):
         self.factory = Faker()
-        self.factory.add_provider(amazon_web_services.AmazonWebServicesProvider)
+        self.factory.add_provider(amazon_web_services.Provider)
 
     def test_region(self):
         for i in range(1000):
