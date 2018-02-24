@@ -1,4 +1,6 @@
 from unittest import TestCase
+import re
+
 from faker import Faker
 from faker_cloud import amazon_web_services
 
@@ -38,3 +40,21 @@ class AmazonWebServicesTest(TestCase):
             self.assertIsInstance(az, str)
             self.assertTrue(az.startswith(region_code))
             self.assertIn(az, self.azs)
+
+    def test_instance_id(self):
+        reg_instance_id = re.compile('^i-[0-9a-f]{17}$')
+        for i in range(1000):
+            instance_id = self.factory.instance_id()
+            self.assertTrue(reg_instance_id.match(instance_id))
+
+    def test_kernel_id(self):
+        reg_kernel_id = re.compile('^aki-[0-9a-f]{8}$')
+        for i in range(1000):
+            kernel_id = self.factory.kernel_id()
+            self.assertTrue(reg_kernel_id.match(kernel_id))
+
+    def test_image_id(self):
+        reg_image_id = re.compile('^ami-[0-9a-f]{8}$')
+        for i in range(1000):
+            image_id = self.factory.image_id()
+            self.assertTrue(reg_image_id.match(image_id))

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from faker.providers import BaseProvider
 
+HEX_LETTERS = '0123456789abcdef'
+
 
 class AmazonWebServicesProvider(BaseProvider):
     _regions = [
@@ -41,6 +43,9 @@ class AmazonWebServicesProvider(BaseProvider):
         'eu-west-2a', 'eu-west-2b',
         'eu-central-1c',
     ]
+    _instance_id_format = 'i-?????????????????'
+    _kernel_id_format = 'aki-????????'
+    _image_id_format = 'ami-????????'
 
     def region(self):
         """
@@ -95,3 +100,15 @@ class AmazonWebServicesProvider(BaseProvider):
         azs = self._availability_zones[:]
         azs = [a for a in azs if a.startswith(region)]
         return self.random_element(azs)
+
+    def hexify(self, text='???', letters=HEX_LETTERS):
+        return self.lexify(text, letters)
+
+    def instance_id(self):
+        return self.hexify(self._instance_id_format)
+
+    def kernel_id(self):
+        return self.hexify(self._kernel_id_format)
+
+    def image_id(self):
+        return self.hexify(self._image_id_format)
