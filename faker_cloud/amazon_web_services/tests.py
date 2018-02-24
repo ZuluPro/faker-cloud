@@ -58,3 +58,14 @@ class AmazonWebServicesTest(TestCase):
         for i in range(1000):
             image_id = self.factory.image_id()
             self.assertTrue(reg_image_id.match(image_id))
+
+    def test_ipv4_public(self):
+        for i in range(1000):
+            ip = self.factory.ipv4_public()
+            self.assertTrue(str(ip).startswith('54.1'))
+
+    def test_ec2_public_dns(self):
+        for i in range(1000):
+            dns = self.factory.ec2_public_dns()
+            self.assertTrue(dns.startswith('ec2-'))
+            self.assertTrue(dns.endswith('.compute-1.amazonaws.com'))

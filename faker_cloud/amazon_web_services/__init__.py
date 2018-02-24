@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import ipaddress
 from faker.providers import BaseProvider
 
 HEX_LETTERS = '0123456789abcdef'
@@ -46,6 +47,8 @@ class AmazonWebServicesProvider(BaseProvider):
     _instance_id_format = 'i-?????????????????'
     _kernel_id_format = 'aki-????????'
     _image_id_format = 'ami-????????'
+    _ipv4_public_net = ipaddress.IPv4Network('54.160.0.0/12')
+    _ec2_public_dns_format = 'ec2-{ip}.compute-1.amazonaws.com'
 
     def region(self):
         """
@@ -112,3 +115,14 @@ class AmazonWebServicesProvider(BaseProvider):
 
     def image_id(self):
         return self.hexify(self._image_id_format)
+
+    def ipv4_public(self):
+        min_ip = self._ipv4_public_net[1]._ip
+        max_ip = self._ipv4_public_net[-2]._ip
+        ip = ipaddress.IPv4Address(self.random_int(min_ip, max_ip))
+        return ip
+
+    def ec2_public_dns(self, ip=None):
+        ip = str(ip or self.ipv4_public()).replace('.', '-')
+        dns = self._ec2_public_dns_format.format(ip=ip)
+        return dns
