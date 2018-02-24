@@ -1,0 +1,5 @@
+include requirements*.txt
+include README.rst
+
+global-exclude *.pyc *.pyo
+global-exclude .git

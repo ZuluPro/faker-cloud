@@ -6,6 +6,7 @@ def read_file(name):
     with open(name) as fd:
         return fd.read()
 
+
 setup(
     name="faker-cloud",
     version=faker_cloud.__version__,
@@ -17,6 +18,7 @@ setup(
     license=faker_cloud.__license__,
     py_modules=['faker_cloud'],
     packages=find_packages(),
+    install_requires=read_file('requirements.txt').splitlines(),
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
