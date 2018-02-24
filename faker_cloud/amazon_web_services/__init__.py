@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 import ipaddress
 from faker.providers import BaseProvider
+from faker.providers import file
 
 HEX_LETTERS = '0123456789abcdef'
 
 
-class AmazonWebServicesProvider(BaseProvider):
+class AmazonWebServicesProvider(file.Provider):
     _regions = [
         ('us-east-1', 'US East (N. Virginia)'),
         ('us-east-2', 'US East (Ohio)'),
@@ -44,6 +45,13 @@ class AmazonWebServicesProvider(BaseProvider):
         'eu-west-2a', 'eu-west-2b',
         'eu-central-1c',
     ]
+    _volume_types = (
+        ('Cold HDD', 'sc1'),
+        ('General Purpose SSD', 'gp2'),
+        ('Magnetic', 'standard'),
+        ('Throughput Optimized HDD', 'st1'),
+        ('Provisioned IOPS SSD', 'io1'),
+    )
     _instance_id_format = 'i-?????????????????'
     _kernel_id_format = 'aki-????????'
     _ami_id_format = 'ami-????????'
@@ -53,6 +61,7 @@ class AmazonWebServicesProvider(BaseProvider):
     _snapshot_id_format = 'snap-????????'
     _ipv4_public_net = ipaddress.IPv4Network('54.160.0.0/12')
     _ec2_public_dns_format = 'ec2-{ip}.compute-1.amazonaws.com'
+    _s3_object_url_format = 'https://s3.amazonaws.com/{bucket_name}/{obj_name}'
 
     def region(self):
         """
@@ -183,6 +192,42 @@ class AmazonWebServicesProvider(BaseProvider):
         """
         return self.hexify(self._volume_id_format)
 
+    def volume_type(self):
+        """
+        Returns an volume type.
+
+        >>> fake.volume_type()
+        ('General Purpose SSD', 'gp2')
+
+        :returns: Tuple with (verbose_name, code)
+        :rtype: tuple
+        """
+        return self.random_element(self._volume_types)
+
+    def volume_type_name(self):
+        """
+        Returns an volume type name.
+
+        >>> fake.volume_type_name()
+        'General Purpose SSD'
+
+        :returns: Volume type name
+        :rtype: str
+        """
+        return self.random_element(self._volume_types)[0]
+
+    def volume_type_code(self):
+        """
+        Returns an volume type code.
+
+        >>> fake.volume_type_code()
+        'gp2'
+
+        :returns: Volume type code
+        :rtype: str
+        """
+        return self.random_element(self._volume_types)[1]
+
     def snapshot_id(self):
         """
         Returns an snapshot ID.
@@ -223,3 +268,18 @@ class AmazonWebServicesProvider(BaseProvider):
         ip = str(ip or self.ipv4_public()).replace('.', '-')
         dns = self._ec2_public_dns_format.format(ip=ip)
         return dns
+
+    def s3_object_url(self, bucket_name=None, obj_name=None):
+        """
+        Returns a S3 URL to an object.
+
+        >>> fake.s3_object_url()
+        'https://s3.amazonaws.com/Ham/Let
+
+        :returns: A URL
+        :rtype: str
+        """
+        bucket_name = bucket_name or self.file_extension()
+        obj_name = obj_name or self.file_name(extension=bucket_name)
+        return self._s3_object_url_format.format(bucket_name=bucket_name,
+                                                 obj_name=obj_name)

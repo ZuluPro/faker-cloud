@@ -8,6 +8,7 @@ from faker_cloud import amazon_web_services
 class AmazonWebServicesTest(TestCase):
     regions = amazon_web_services.AmazonWebServicesProvider._regions
     azs = amazon_web_services.AmazonWebServicesProvider._availability_zones
+    volume_types = amazon_web_services.AmazonWebServicesProvider._volume_types
 
     def setUp(self):
         self.factory = Faker()
@@ -77,6 +78,23 @@ class AmazonWebServicesTest(TestCase):
             vol_id = self.factory.volume_id()
             self.assertTrue(reg_vol_id.match(vol_id))
 
+    def test_volume_type(self):
+        for i in range(1000):
+            vt = self.factory.volume_type()
+            self.assertIn(vt, self.volume_types)
+
+    def test_volume_type_name(self):
+        names = [i for i, j in self.volume_types]
+        for i in range(1000):
+            name = self.factory.volume_type_name()
+            self.assertIn(name, names)
+
+    def test_volume_type_code(self):
+        codes = [j for i, j in self.volume_types]
+        for i in range(1000):
+            code = self.factory.volume_type_code()
+            self.assertIn(code, codes)
+
     def test_snapshot_id(self):
         reg_snap_id = re.compile('^snap-[0-9a-f]{8}$')
         for i in range(1000):
@@ -93,3 +111,8 @@ class AmazonWebServicesTest(TestCase):
             dns = self.factory.ec2_public_dns()
             self.assertTrue(dns.startswith('ec2-'))
             self.assertTrue(dns.endswith('.compute-1.amazonaws.com'))
+
+    def test_s3_object_url(self):
+        for i in range(1000):
+            url = self.factory.s3_object_url()
+            self.assertTrue(url.startswith('https://s3.amazonaws.com/'))
