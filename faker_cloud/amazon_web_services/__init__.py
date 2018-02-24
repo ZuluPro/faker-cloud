@@ -243,42 +243,6 @@ class Provider(cloud.Provider, file.Provider):
         """
         return self.hexify(self._volume_id_format)
 
-    def volume_type(self):
-        """
-        Returns an volume type.
-
-        >>> fake.volume_type()
-        ('General Purpose SSD', 'gp2')
-
-        :returns: Tuple with (verbose_name, code)
-        :rtype: tuple
-        """
-        return self.random_element(self._volume_types)
-
-    def volume_type_name(self):
-        """
-        Returns an volume type name.
-
-        >>> fake.volume_type_name()
-        'General Purpose SSD'
-
-        :returns: Volume type name
-        :rtype: str
-        """
-        return self.random_element(self._volume_types)[0]
-
-    def volume_type_code(self):
-        """
-        Returns an volume type code.
-
-        >>> fake.volume_type_code()
-        'gp2'
-
-        :returns: Volume type code
-        :rtype: str
-        """
-        return self.random_element(self._volume_types)[1]
-
     def instance_type_serie(self):
         """
         Returns an instance type serie.
