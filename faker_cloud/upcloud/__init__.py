@@ -36,7 +36,7 @@ class Provider(cloud.Provider):
         >>> fake.zone_name()
         'uk-lon1'
 
-        :returns: Flavor name
+        :returns: Zone code
         :rtype: str
         """
         return self.random_element(self._zones)[0]
@@ -48,7 +48,7 @@ class Provider(cloud.Provider):
         >>> fake.zone_name()
         'Amsterdam #1'
 
-        :returns: Flavor name
+        :returns: Zone name
         :rtype: str
         """
         return self.random_element(self._zones)[1]
