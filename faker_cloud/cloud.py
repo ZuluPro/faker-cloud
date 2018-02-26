@@ -42,7 +42,7 @@ class Provider(BaseProvider):
 
     def datacenter_name(self):
         """
-        Returns a datacenter naùe.
+        Returns a datacenter name.
 
         >>> fake.datacenter_name()
         'London #1'
