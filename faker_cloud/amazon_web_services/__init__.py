@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import ipaddress
 from faker.providers import file
+from faker_cloud import ipaddress
 from faker_cloud import cloud
 
 
@@ -113,7 +113,9 @@ class Provider(cloud.Provider, file.Provider):
     _volume_id_format = 'vol-?????????????????'
     _vpc_id_format = 'vpc-????????'
     _snapshot_id_format = 'snap-????????'
-    _ipv4_public_net = ipaddress.IPv4Network('54.160.0.0/12')
+    _ipv4_public_nets = (
+        ipaddress.ip_network('54.160.0.0/12'),
+    )
     _ec2_public_dns_format = 'ec2-{ip}.compute-1.amazonaws.com'
     _s3_object_url_format = 'https://s3.amazonaws.com/{bucket_name}/{obj_name}'
 
@@ -313,21 +315,6 @@ class Provider(cloud.Provider, file.Provider):
         :rtype: str
         """
         return self.hexify(self._snapshot_id_format)
-
-    def ipv4_public(self):
-        """
-        Returns an AWS public IPv4.
-
-        >>> fake.ipv4_public()
-        IPv4Address('52.162.42.6')
-
-        :returns: Public AWS IPv4
-        :rtype: ipaddress.IPv4Address
-        """
-        min_ip = self._ipv4_public_net[1]._ip
-        max_ip = self._ipv4_public_net[-2]._ip
-        ip = ipaddress.IPv4Address(self.random_int(min_ip, max_ip))
-        return ip
 
     def ec2_public_dns(self, ip=None):
         """
