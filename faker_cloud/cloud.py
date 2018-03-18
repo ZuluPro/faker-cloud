@@ -1,3 +1,4 @@
+import ipaddress
 import string
 from faker.providers import BaseProvider
 
@@ -102,3 +103,21 @@ class Provider(BaseProvider):
         :rtype: str
         """
         return self.random_element(self._volume_types)[1]
+
+    def ipv4_public(self):
+        """
+        Returns an cloud's public IPv4 or random IPv4
+
+        >>> fake.ipv4_public()
+        IPv4Address('52.162.42.6')
+
+        :returns: IPv4
+        :rtype: ipaddress.IPv4Address
+        """
+        if getattr(self, '_ipv4_public_nets'):
+            net = self.random_element(self._ipv4_public_nets)
+            min_ip = net[1]._ip
+            max_ip = net[-2]._ip
+            ip = ipaddress.IPv4Address(self.random_int(min_ip, max_ip))
+            return ip
+        return self.ipv4()
